@@ -1,0 +1,35 @@
+[Unit]
+Description=TCP Service
+Documentation=https://github.com/zeik-dev/tcp-service/wiki
+After=network.target
+
+[Service]
+Type=simple
+User=tcpservice
+Group=tcpservice
+
+# Ejecutable
+ExecStart=/usr/local/bin/tcp_service.py
+
+# Reinicio automático
+Restart=always
+RestartSec=5
+
+# Límites de recursos
+MemoryMax=128M
+CPUQuota=50%
+
+# Seguridad adicional
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/tcp_service /var/run
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tcp-service
+
+[Install]
+WantedBy=multi-user.target
